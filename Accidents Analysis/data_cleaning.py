@@ -8,12 +8,14 @@ def clean_data(filename):
     try:
         # read csv file
         df = pd.read_csv(filename, na_values=[
-                         'na', 'NA', 'N/A', 'NaN', 'Unknown'])
+            'na', 'NaN'])
 
         # remove missing and duplicates value
         df = df.dropna()
         df = df.drop_duplicates()
         df = df.reset_index(drop=True)
+
+        df['Hr_time'] = df['Time'].str.split(':').str[0]
 
         to_drop = [
             'Sex_of_casualty',
